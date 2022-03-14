@@ -2,7 +2,7 @@
 
 import { ZalgoPromise } from 'zalgo-promise/src';
 import { memoize, getQueryParam, stringifyError } from 'belter/src';
-import { FPTI_KEY, SDK_QUERY_KEYS, INTENT, CURRENCY } from '@paypal/sdk-constants/src';
+import { FPTI_KEY, SDK_QUERY_KEYS, INTENT, CURRENCY, FUNDING } from '@paypal/sdk-constants/src';
 import { getDomain } from 'cross-domain-utils/src';
 
 import { createOrderID, billingTokenToOrderID, subscriptionIdToCartId, createPaymentToken } from '../api';
@@ -13,7 +13,9 @@ import { ENABLE_PAYMENT_API } from '../config';
 import type { CreateSubscription } from './createSubscription';
 import type { CreateBillingAgreement } from './createBillingAgreement';
 
-export type XCreateOrderDataType = {||};
+export type XCreateOrderDataType = {|
+    paymentSource? : $Values<typeof FUNDING>
+|};
 
 type OrderActions = {|
     create : (Object) => ZalgoPromise<string>
@@ -30,11 +32,10 @@ export type XCreateOrderActionsType = {|
 
 export type XCreateOrder = (XCreateOrderDataType, XCreateOrderActionsType) => ZalgoPromise<string>;
 
-export type CreateOrder = () => ZalgoPromise<string>;
+export type CreateOrder = ({| fundingSource : $Values<typeof FUNDING> |}) => ZalgoPromise<string>;
 
-export function buildXCreateOrderData() : XCreateOrderDataType {
-    // $FlowFixMe
-    return {};
+export function buildXCreateOrderData({ fundingSource } : {| fundingSource : $Values<typeof FUNDING> |}) : XCreateOrderDataType {
+    return { paymentSource: fundingSource };
 }
 
 type OrderOptions = {|
@@ -159,10 +160,9 @@ type CreateOrderXProps = {|
 |};
 
 export function getCreateOrder({ createOrder, intent, currency, merchantID, partnerAttributionID } : CreateOrderXProps, { facilitatorAccessToken, createBillingAgreement, createSubscription } : {| facilitatorAccessToken : string, createBillingAgreement? : ?CreateBillingAgreement, createSubscription? : ?CreateSubscription |}) : CreateOrder {
-    const data = buildXCreateOrderData();
     const actions = buildXCreateOrderActions({ facilitatorAccessToken, intent, currency, merchantID, partnerAttributionID });
-
-    return memoize(() => {
+    // Will need to update all createOrders with fundingSource
+    return memoize(({ fundingSource }) => {
         const queryOrderID = getQueryParam('orderID');
         if (queryOrderID) {
             return ZalgoPromise.resolve(queryOrderID);
@@ -176,7 +176,7 @@ export function getCreateOrder({ createOrder, intent, currency, merchantID, part
             } else if (createSubscription) {
                 return createSubscription().then(subscriptionIdToCartId);
             } else if (createOrder) {
-                return createOrder(data, actions);
+                return createOrder(buildXCreateOrderData({ fundingSource }), actions);
             } else {
                 return actions.order.create({
                     purchase_units: [

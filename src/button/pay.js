@@ -137,7 +137,7 @@ export function initiatePaymentFlow({ payment, serviceData, config, components, 
                 enableLoadingSpinner(button);
             }
 
-            const updateClientConfigPromise = createOrder().then(orderID => {
+            const updateClientConfigPromise = createOrder({ fundingSource }).then(orderID => {
                 if (updateFlowClientConfig) {
                     return updateFlowClientConfig({ orderID, payment, userExperienceFlow, buttonSessionID });
                 }
@@ -148,7 +148,7 @@ export function initiatePaymentFlow({ payment, serviceData, config, components, 
                 });
             }).catch(noop);
 
-            const vaultPromise = createOrder().then(orderID => {
+            const vaultPromise = createOrder({ fundingSource }).then(orderID => {
                 return ZalgoPromise.try(() => {
                     if (clientID && buyerIntent === BUYER_INTENT.PAY) {
                         return enableVaultSetup({ orderID, vault, clientAccessToken, fundingEligibility, fundingSource, createBillingAgreement, createSubscription,
@@ -161,11 +161,11 @@ export function initiatePaymentFlow({ payment, serviceData, config, components, 
                 return start();
             });
 
-            const validateOrderPromise = createOrder().then(orderID => {
+            const validateOrderPromise = createOrder({ fundingSource }).then(orderID => {
                 return validateOrder(orderID, { env, clientID, merchantID, intent, currency, vault, buttonLabel });
             });
              
-            const confirmOrderPromise = createOrder().then((orderID) => {
+            const confirmOrderPromise = createOrder({ fundingSource }).then((orderID) => {
                 return window.xprops.sessionState.get(
                     `__confirm_${ fundingSource }_payload__`
                 ).then(confirmOrderPayload => {
