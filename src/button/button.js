@@ -163,7 +163,8 @@ export function setupButton(opts : ButtonOpts) : ZalgoPromise<void> {
             event.preventDefault();
             event.stopPropagation();
 
-            const paymentProps = getButtonProps({ facilitatorAccessToken, brandedDefault });
+            const paymentProps = getButtonProps({ facilitatorAccessToken, brandedDefault, paymentSource: paymentFundingSource });
+
             const payPromise = initiatePayment({ payment, props: paymentProps });
             const { onError } = paymentProps;
 
