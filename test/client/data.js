@@ -14,7 +14,7 @@ import {
 } from './mocks';
 
 describe('callback data cases', () => {
-    it('should render a button, click the button, and have the payment source in the createOrder callback data', async () => {
+    it('should render a button, click the button, pass the selected funding to the createOrder data', async () => {
         return await wrapPromise(async ({ expect }) => {
 
             const orderID = generateOrderID();
@@ -38,7 +38,7 @@ describe('callback data cases', () => {
         });
     });
 
-    it.only('should render a button, click the button, and have the payment source in the onApprove callback data', async () => {
+    it('should render a button, click the button, and pass the selected funding to the onApprove data', async () => {
         return await wrapPromise(async ({ expect }) => {
 
             const orderID = generateOrderID();

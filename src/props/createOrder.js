@@ -161,6 +161,7 @@ type CreateOrderXProps = {|
 |};
 
 export function getCreateOrder({ createOrder, intent, currency, merchantID, partnerAttributionID, paymentSource } : CreateOrderXProps, { facilitatorAccessToken, createBillingAgreement, createSubscription } : {| facilitatorAccessToken : string, createBillingAgreement? : ?CreateBillingAgreement, createSubscription? : ?CreateSubscription |}) : CreateOrder {
+    const data = buildXCreateOrderData({ paymentSource });
     const actions = buildXCreateOrderActions({ facilitatorAccessToken, intent, currency, merchantID, partnerAttributionID });
 
     return memoize(() => {
@@ -177,7 +178,7 @@ export function getCreateOrder({ createOrder, intent, currency, merchantID, part
             } else if (createSubscription) {
                 return createSubscription().then(subscriptionIdToCartId);
             } else if (createOrder) {
-                return createOrder(buildXCreateOrderData({ paymentSource }), actions);
+                return createOrder(data, actions);
             } else {
                 return actions.order.create({
                     purchase_units: [
