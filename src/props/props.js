@@ -171,7 +171,7 @@ export type Props = {|
     allowBillingPayments : boolean
 |};
 
-export function getProps({ facilitatorAccessToken, branded, paymentSource }: {| facilitatorAccessToken : string, branded: boolean | null, paymentSource: $Values<typeof FUNDING>  |}) : Props {
+export function getProps({ facilitatorAccessToken, branded, paymentSource } : {| facilitatorAccessToken : string, branded : boolean | null, paymentSource : $Values<typeof FUNDING> | null |}) : Props {
     const xprops : XProps = window.xprops;
 
     let {

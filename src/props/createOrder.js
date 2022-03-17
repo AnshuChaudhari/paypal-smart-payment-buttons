@@ -14,7 +14,7 @@ import type { CreateSubscription } from './createSubscription';
 import type { CreateBillingAgreement } from './createBillingAgreement';
 
 export type XCreateOrderDataType = {|
-    paymentSource? : $Values<typeof FUNDING>
+    paymentSource : $Values<typeof FUNDING> | null
 |};
 
 type OrderActions = {|
@@ -34,7 +34,7 @@ export type XCreateOrder = (XCreateOrderDataType, XCreateOrderActionsType) => Za
 
 export type CreateOrder = () => ZalgoPromise<string>;
 
-export function buildXCreateOrderData({ paymentSource }: {| paymentSource : $Values<typeof FUNDING> |}) : XCreateOrderDataType {
+export function buildXCreateOrderData({ paymentSource } : {| paymentSource : $Values<typeof FUNDING> | null |}) : XCreateOrderDataType {
     return { paymentSource };
 }
 
@@ -157,7 +157,7 @@ type CreateOrderXProps = {|
     currency : $Values<typeof CURRENCY>,
     merchantID : $ReadOnlyArray<string>,
     partnerAttributionID : ?string,
-    paymentSource : $Values<typeof FUNDING>
+    paymentSource : $Values<typeof FUNDING> | null
 |};
 
 export function getCreateOrder({ createOrder, intent, currency, merchantID, partnerAttributionID, paymentSource } : CreateOrderXProps, { facilitatorAccessToken, createBillingAgreement, createSubscription } : {| facilitatorAccessToken : string, createBillingAgreement? : ?CreateBillingAgreement, createSubscription? : ?CreateSubscription |}) : CreateOrder {
