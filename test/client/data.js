@@ -17,25 +17,33 @@ import {
 describe('callback data cases', () => {
     it('should render a button, click the button, pass the selected funding to the createOrder data', async () => {
         return await wrapPromise(async ({ expect }) => {
-
             const orderID = generateOrderID();
 
             window.xprops.createOrder = mockAsyncProp(expect('createOrder', async (data) => {
-                if (data.paymentSource && data.paymentSource === 'paypal') {
+                if (data.paymentSource && data.paymentSource === 'venmo') {
                     return orderID;
                 }
 
                 throw new Error(`Expected paymentSource to be available in createOrder data`);
             }));
 
-            createButtonHTML();
+            const fundingEligibility = {
+                venmo: {
+                    eligible: true
+                }
+            };
+
+            createButtonHTML({ fundingEligibility });
 
             await mockSetupButton({
                 merchantID:         [ 'XYZ12345' ],
-                fundingEligibility: DEFAULT_FUNDING_ELIGIBILITY
+                eligibility: {
+                    cardFields: false,
+                    native:     true
+                }
             });
 
-            await clickButton(FUNDING.PAYPAL);
+            await clickButton(FUNDING.VENMO);
         });
     });
 
