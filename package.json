@@ -82,7 +82,7 @@
     "card-validator": "^8.1.1",
     "credit-card-type": "^9.1.0",
     "cross-domain-utils": "^2.0.16",
-    "get-browser-fingerprint": "^1.1.0",
+    "get-browser-fingerprint": "^2.0.0",
     "jsx-pragmatic": "^2",
     "module-alias": "^2.2.2",
     "preact": "^10",
