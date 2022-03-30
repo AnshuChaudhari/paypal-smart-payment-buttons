@@ -96,7 +96,7 @@
     "express": "^4.16.3",
     "flow-bin": "0.155.0",
     "@krakenjs/grabthar-release": "^2.0.0",
-    "grumbler-scripts": "^5.0.1",
+    "grumbler-scripts": "^6.0.0",
     "post-robot": "^10.0.13",
     "sync-browser-mocks": "^2.0.8",
     "webpack-mem-compile": "^1.0.2"
