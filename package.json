@@ -94,7 +94,7 @@
   "devDependencies": {
     "babel-core": "^7.0.0-bridge.0",
     "express": "^4.16.3",
-    "flow-bin": "0.155.0",
+    "flow-bin": "0.175.0",
     "@krakenjs/grabthar-release": "^2.0.0",
     "grumbler-scripts": "^5.0.1",
     "post-robot": "^10.0.13",
