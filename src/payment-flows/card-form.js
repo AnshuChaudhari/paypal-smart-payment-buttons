@@ -41,7 +41,6 @@ function isCardFormPaymentEligible({ payment } : IsPaymentEligibleOptions) : boo
     if (win) {
         return false;
     }
-    if(fundingSource.toLowerCase() === 'eps') return true;
 
     if (fundingSource && fundingSource !== FUNDING.CARD) {
         return false;
@@ -113,11 +112,8 @@ const slideDownButtons = () => {
 
 function initCardForm({ props, components, payment, serviceData, config } : InitOptions) : PaymentFlowInstance {
     const { createOrder, onApprove, onCancel,
-        locale, commit, onError, sessionID, fieldsSessionID, buttonSessionID, onAuth } = props;
-
-    // const { CardForm } = components;
-    const { PaymentFields } = components;
-
+        locale, commit, onError, sessionID, buttonSessionID, onAuth } = props;
+    const { CardForm } = components;
     const { fundingSource, card } = payment;
     const { cspNonce } = config;
     const { buyerCountry } = serviceData;
@@ -144,10 +140,10 @@ function initCardForm({ props, components, payment, serviceData, config } : Init
 
     let buyerAccessToken;
 
-    const { render, close: closeCardForm } = PaymentFields({
+    const { render, close: closeCardForm } = CardForm({
         createOrder,
 
-        fundingSource: 'eps',
+        fundingSource,
         card,
 
         onApprove: ({ payerID, paymentID, billingToken }) => {
@@ -185,11 +181,10 @@ function initCardForm({ props, components, payment, serviceData, config } : Init
     });
 
     const start = () => {
-        console.log('in start ------ ');
         cardFormOpen = true;
         const renderPromise = render('#card-fields-container');
         slideUpButtons();
-        highlightCard(fundingSource);
+        highlightCard(card);
         return renderPromise;
     };
 
