@@ -115,7 +115,7 @@ export type Components = {|
     Menu : MenuFlowType,
     Installments : InstallmentsFlowType,
     QRCode : QRCodeType,
-    PaymentFields: PaymentFieldsFlowType
+    PaymentFields : PaymentFieldsFlowType
 |};
 
 export function getComponents() : Components {
@@ -150,7 +150,8 @@ export type ServiceData = {|
     buyerAccessToken : ?string,
     content : ContentType,
     eligibility : {|
-        cardForm : boolean
+        cardForm : boolean,
+        paymentFields : boolean
     |},
     cookies : string,
     personalization : PersonalizationType

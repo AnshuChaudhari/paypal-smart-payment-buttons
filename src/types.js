@@ -176,7 +176,7 @@ export type PayPal = {|
     CardForm : CardFormFlowType,
     ThreeDomainSecure : ThreeDomainSecureFlowType,
     Menu : MenuFlowType,
-    PaymentFields: PaymentFieldsFlowType
+    PaymentFields : PaymentFieldsFlowType,
     postRobot : PostRobot
 |};
 
