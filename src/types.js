@@ -156,12 +156,27 @@ export type PostRobot = {|
 
 |};
 
+export type PaymentFieldsProps = {|
+    window? : ?(ProxyWindow | CrossDomainWindowType),
+    sessionID : string,
+    fieldsSessionID : string,
+    partnerAttributionID : string,
+    onInit : () => ZalgoPromise<void> | void,
+    buyerCountry : $Values<typeof COUNTRY>,
+    locale : LocaleType,
+    commit : boolean,
+    cspNonce : ?string
+|};
+
+export type PaymentFieldsFlowType = ZoidComponent<PaymentFieldsProps>;
+
 export type PayPal = {|
     version : string,
     Checkout : CheckoutFlowType,
     CardForm : CardFormFlowType,
     ThreeDomainSecure : ThreeDomainSecureFlowType,
     Menu : MenuFlowType,
+    PaymentFields : PaymentFieldsFlowType,
     postRobot : PostRobot
 |};
 
