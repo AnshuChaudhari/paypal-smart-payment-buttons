@@ -1,18 +1,14 @@
 /* @flow */
 
-import { ZalgoPromise } from 'zalgo-promise/src';
+import { ZalgoPromise } from '@krakenjs/zalgo-promise/src';
 import { FUNDING } from '@paypal/sdk-constants/src';
-import { memoize, querySelectorAll, debounce, noop } from 'belter/src';
-import { popup } from '@krakenjs/belter/src';
-
-import { openPopup } from '../ui';
-// import { SpinnerPage } from '@paypal/common-components/src';
+import { memoize, querySelectorAll, debounce, noop, popup } from '@krakenjs/belter/src';
 
 import { DATA_ATTRIBUTES, APM_LIST } from '../constants';
 import { unresolvedPromise, promiseNoop, getLogger } from '../lib';
 import { getConfirmOrder } from '../props/confirmOrder';
 
-import type { PaymentFlow, PaymentFlowInstance, IsEligibleOptions, IsPaymentEligibleOptions, InitOptions } from './types';
+import type { PaymentFlow, PaymentFlowInstance, InitOptions } from './types';
 import { checkout } from './checkout';
 
 function setupPaymentField() {
@@ -149,7 +145,7 @@ const slideDownButtons = (fundingSource : ?$Values<typeof FUNDING>) => {
 
 function initPaymentFields({ props, components, payment, serviceData, config } : InitOptions) : PaymentFlowInstance {
     const { createOrder, onApprove, onCancel,
-        locale, commit, onError, sessionID, fieldsSessionID, partnerAttributionID, buttonSessionID, onAuth,  } = props;
+        locale, commit, onError, sessionID, fieldsSessionID, partnerAttributionID, buttonSessionID, onAuth  } = props;
 
     const { PaymentFields } = components;
 
@@ -183,21 +179,19 @@ function initPaymentFields({ props, components, payment, serviceData, config } :
         fundingSource,
         fieldsSessionID,
         onContinue: async (data) => {
-            console.log('data', data);
             const orderID = await createOrder();
             return getConfirmOrder({
                 orderID, payload: data, partnerAttributionID
             }, {
                 facilitatorAccessToken: serviceData.facilitatorAccessToken
             }).then((response) => {
-                console.log('response from confirm order, payment-fields', response);
                 const { width, height } = getDimensions(fundingSource);
                 win = popup(`https://msmaster.qa.paypal.com/latinumcheckout/unbranded?sdkMeta=${ sdkMeta }&branded=false&fundingSource=${ fundingSource }&standaloneFundingSource=${ fundingSource }&token=${ orderID }`, { width, height });
                 console.log('win', win);
                 console.log('win.document', win.document);
             });
         },
-        onApprove:     ({ payerID, paymentID, billingToken }) => {
+        onApprove: ({ payerID, paymentID, billingToken }) => {
             // eslint-disable-next-line no-use-before-define
             return close().then(() => {
                 return onApprove({ payerID, paymentID, billingToken, buyerAccessToken }, { restart }).catch(noop);
@@ -229,7 +223,6 @@ function initPaymentFields({ props, components, payment, serviceData, config } :
     });
 
     const start = () => {
-        console.log('in start ------ ');
         paymentFieldsOpen = true;
         const renderPromise = render('#payment-fields-container');
         slideUpButtons(fundingSource);
