@@ -47,9 +47,14 @@ let paymentFieldsOpen = false;
 //     return true;
 // }
 function isPaymentFieldsEligible({ props, serviceData } : IsEligibleOptions) : boolean {
-    console.log('props ---- ', props);
-    console.log('serviceData ---- ', serviceData);
-    return true;
+    console.log('props ----', props);
+    console.log('serviceData ----', serviceData);
+    const mark = document.querySelector(`#${ props.fundingSource }-radio`) || null;
+    // const selectedRadioBtn = document.querySelector('input[name="payment-option"]:checked').value;
+    // const epsButtonsContainer = document.querySelector(`[${ DATA_ATTRIBUTES.FUNDING_SOURCE }="${ props.fundingSource }"]`);
+    if (mark) {
+        return true;
+    }
 }
 function isPaymentFieldsPaymentEligible() : boolean {
     return true;
@@ -135,9 +140,13 @@ function initPaymentFields({ props, components, payment, serviceData, config } :
             close: promiseNoop
         };
     }
-    const restart = memoize(() : ZalgoPromise<void> =>
-        checkout.init({ props, components, payment: { ...payment, isClick: false }, serviceData, config, restart })
-            .start().finally(unresolvedPromise));
+    const restart = memoize(() : ZalgoPromise<void> => {
+        return close().finally(() => {
+            return initPaymentFields({ props, components, serviceData, config, payment: { ...payment }, restart })
+                .start().finally(unresolvedPromise);
+        });
+    });
+
     const onClose = () => {
         paymentFieldsOpen = false;
     };
@@ -150,23 +159,23 @@ function initPaymentFields({ props, components, payment, serviceData, config } :
         fieldsSessionID,
         createOrder,
         onContinue: async (data) => {
-            console.log('data in spb payment-fields ----- ', data);
+            console.log('data in spb payment-fields -----', data);
             const orderID = await createOrder();
             return getConfirmOrder({
                 orderID, payload: data, partnerAttributionID
             }, {
                 facilitatorAccessToken: serviceData.facilitatorAccessToken
             }).then((response) => {
-                let checkout = Checkout({
+                const checkout = Checkout({
                     ...props,
                     onClose: () => {
                         console.log('onClose was fired');
                     },
                     sdkMeta,
-                    branded: false,
+                    branded:                 false,
                     standaloneFundingSource: fundingSource,
-                    inlinexo: false,
-                    onCancel: () => {
+                    inlinexo:                false,
+                    onCancel:                () => {
                         console.log('pop up closed');
                     }
                 });
