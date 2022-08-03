@@ -13,7 +13,7 @@ import type { ConfirmData } from '../api';
 import type { PaymentFlow, PaymentFlowInstance, IsEligibleOptions, IsPaymentEligibleOptions, InitOptions } from './types';
 
 function setupPaymentField() {
-    // pass
+    //  pass
 }
 const canRenderTop = false;
 function getRenderWindow() : Object {
