@@ -5186,34 +5186,51 @@ window.smartCard = function(modules) {
     }, preact_module_d.prototype.forceUpdate = function(n) {
         this.__v && (this.__e = !0, n && this.__h.push(n), b(this));
     }, preact_module_d.prototype.render = p, preact_module_t = [], g.__r = 0;
-    var hooks_module_t, hooks_module_u, hooks_module_r, hooks_module_o, hooks_module_i = 0, hooks_module_c = [], hooks_module_f = [], hooks_module_e = l.__b, hooks_module_a = l.__r, hooks_module_v = l.diffed, hooks_module_l = l.__c, hooks_module_m = l.unmount;
-    function hooks_module_p(t, r) {
-        l.__h && l.__h(hooks_module_u, t, hooks_module_i || r), hooks_module_i = 0;
-        var o = hooks_module_u.__H || (hooks_module_u.__H = {
+    var hooks_module_t, hooks_module_r, hooks_module_u, hooks_module_i, hooks_module_o = 0, hooks_module_c = [], hooks_module_f = [], hooks_module_e = l.__b, hooks_module_a = l.__r, hooks_module_v = l.diffed, hooks_module_l = l.__c, hooks_module_m = l.unmount;
+    function hooks_module_d(t, u) {
+        l.__h && l.__h(hooks_module_r, t, hooks_module_o || u), hooks_module_o = 0;
+        var i = hooks_module_r.__H || (hooks_module_r.__H = {
             __: [],
             __h: []
         });
-        return t >= o.__.length && o.__.push({
+        return t >= i.__.length && i.__.push({
             __V: hooks_module_f
-        }), o.__[t];
+        }), i.__[t];
     }
-    function hooks_module_y(n) {
-        return hooks_module_i = 1, function(n, r, o) {
-            var i = hooks_module_p(hooks_module_t++, 2);
-            return i.t = n, i.__c || (i.__ = [ hooks_module_z(void 0, r), function(n) {
-                var t = i.t(i.__[0], n);
-                i.__[0] !== t && (i.__ = [ t, i.__[1] ], i.__c.setState({}));
-            } ], i.__c = hooks_module_u), i.__;
+    function hooks_module_p(n) {
+        return hooks_module_o = 1, function(n, u, i) {
+            var o = hooks_module_d(hooks_module_t++, 2);
+            if (o.t = n, !o.__c && (o.__ = [ hooks_module_z(void 0, u), function(n) {
+                var t = o.__N ? o.__N[0] : o.__[0], r = o.t(t, n);
+                t !== r && (o.__N = [ r, o.__[1] ], o.__c.setState({}));
+            } ], o.__c = hooks_module_r, !hooks_module_r.u)) {
+                hooks_module_r.u = !0;
+                var c = hooks_module_r.shouldComponentUpdate;
+                hooks_module_r.shouldComponentUpdate = function(n, t, r) {
+                    if (!o.__c.__H) return !0;
+                    var u = o.__c.__H.__.filter((function(n) {
+                        return n.__c;
+                    }));
+                    return (u.every((function(n) {
+                        return !n.__N;
+                    })) || !u.every((function(n) {
+                        if (!n.__N) return !0;
+                        var t = n.__[0];
+                        return n.__ = n.__N, n.__N = void 0, t === n.__[0];
+                    }))) && (!c || c.call(this, n, t, r));
+                };
+            }
+            return o.__N || o.__;
         }(hooks_module_z, n);
     }
-    function hooks_module_(r, o) {
-        var i = hooks_module_p(hooks_module_t++, 3);
-        !l.__s && hooks_module_w(i.__H, o) && (i.__ = r, i.u = o, hooks_module_u.__H.__h.push(i));
+    function hooks_module_h(u, i) {
+        var o = hooks_module_d(hooks_module_t++, 3);
+        !l.__s && hooks_module_w(o.__H, i) && (o.__ = u, o.i = i, hooks_module_r.__H.__h.push(o));
     }
-    function hooks_module_s(n) {
-        return hooks_module_i = 5, function(n, u) {
-            var r = hooks_module_p(hooks_module_t++, 7);
-            return hooks_module_w(r.__H, u) ? (r.__V = n(), r.u = u, r.__h = n, r.__V) : r.__;
+    function hooks_module_(n) {
+        return hooks_module_o = 5, function(n, r) {
+            var u = hooks_module_d(hooks_module_t++, 7);
+            return hooks_module_w(u.__H, r) ? (u.__V = n(), u.i = r, u.__h = n, u.__V) : u.__;
         }((function() {
             return {
                 current: n
@@ -5221,69 +5238,69 @@ window.smartCard = function(modules) {
         }), []);
     }
     function hooks_module_b() {
-        for (var t; t = hooks_module_c.shift(); ) if (t.__P) try {
+        for (var t; t = hooks_module_c.shift(); ) if (t.__P && t.__H) try {
             t.__H.__h.forEach(hooks_module_j), t.__H.__h.forEach(hooks_module_k), t.__H.__h = [];
-        } catch (u) {
-            t.__H.__h = [], l.__e(u, t.__v);
+        } catch (r) {
+            t.__H.__h = [], l.__e(r, t.__v);
         }
     }
     l.__b = function(n) {
-        hooks_module_u = null, hooks_module_e && hooks_module_e(n);
+        hooks_module_r = null, hooks_module_e && hooks_module_e(n);
     }, l.__r = function(n) {
         hooks_module_a && hooks_module_a(n), hooks_module_t = 0;
-        var o = (hooks_module_u = n.__c).__H;
-        o && (hooks_module_r === hooks_module_u ? (o.__h = [], hooks_module_u.__h = [], 
-        o.__.forEach((function(n) {
-            n.__V = hooks_module_f, n.u = void 0;
-        }))) : (o.__h.forEach(hooks_module_j), o.__h.forEach(hooks_module_k), o.__h = [])), 
-        hooks_module_r = hooks_module_u;
+        var i = (hooks_module_r = n.__c).__H;
+        i && (hooks_module_u === hooks_module_r ? (i.__h = [], hooks_module_r.__h = [], 
+        i.__.forEach((function(n) {
+            n.__N && (n.__ = n.__N), n.__V = hooks_module_f, n.__N = n.i = void 0;
+        }))) : (i.__h.forEach(hooks_module_j), i.__h.forEach(hooks_module_k), i.__h = [])), 
+        hooks_module_u = hooks_module_r;
     }, l.diffed = function(t) {
         hooks_module_v && hooks_module_v(t);
-        var i = t.__c;
-        i && i.__H && (i.__H.__h.length && (1 !== hooks_module_c.push(i) && hooks_module_o === l.requestAnimationFrame || ((hooks_module_o = l.requestAnimationFrame) || function(n) {
-            var t, u = function() {
-                clearTimeout(r), hooks_module_g && cancelAnimationFrame(t), setTimeout(n);
-            }, r = setTimeout(u, 100);
-            hooks_module_g && (t = requestAnimationFrame(u));
-        })(hooks_module_b)), i.__H.__.forEach((function(n) {
-            n.u && (n.__H = n.u), n.__V !== hooks_module_f && (n.__ = n.__V), n.u = void 0, 
+        var o = t.__c;
+        o && o.__H && (o.__H.__h.length && (1 !== hooks_module_c.push(o) && hooks_module_i === l.requestAnimationFrame || ((hooks_module_i = l.requestAnimationFrame) || function(n) {
+            var t, r = function() {
+                clearTimeout(u), hooks_module_g && cancelAnimationFrame(t), setTimeout(n);
+            }, u = setTimeout(r, 100);
+            hooks_module_g && (t = requestAnimationFrame(r));
+        })(hooks_module_b)), o.__H.__.forEach((function(n) {
+            n.i && (n.__H = n.i), n.__V !== hooks_module_f && (n.__ = n.__V), n.i = void 0, 
             n.__V = hooks_module_f;
-        }))), hooks_module_r = hooks_module_u = null;
-    }, l.__c = function(t, u) {
-        u.some((function(t) {
+        }))), hooks_module_u = hooks_module_r = null;
+    }, l.__c = function(t, r) {
+        r.some((function(t) {
             try {
                 t.__h.forEach(hooks_module_j), t.__h = t.__h.filter((function(n) {
                     return !n.__ || hooks_module_k(n);
                 }));
-            } catch (r) {
-                u.some((function(n) {
+            } catch (u) {
+                r.some((function(n) {
                     n.__h && (n.__h = []);
-                })), u = [], l.__e(r, t.__v);
+                })), r = [], l.__e(u, t.__v);
             }
-        })), hooks_module_l && hooks_module_l(t, u);
+        })), hooks_module_l && hooks_module_l(t, r);
     }, l.unmount = function(t) {
         hooks_module_m && hooks_module_m(t);
-        var u, r = t.__c;
-        r && r.__H && (r.__H.__.forEach((function(n) {
+        var r, u = t.__c;
+        u && u.__H && (u.__H.__.forEach((function(n) {
             try {
                 hooks_module_j(n);
             } catch (n) {
-                u = n;
+                r = n;
             }
-        })), u && l.__e(u, r.__v));
+        })), r && l.__e(r, u.__v));
     };
     var hooks_module_g = "function" == typeof requestAnimationFrame;
     function hooks_module_j(n) {
-        var t = hooks_module_u, r = n.__c;
-        "function" == typeof r && (n.__c = void 0, r()), hooks_module_u = t;
+        var t = hooks_module_r, u = n.__c;
+        "function" == typeof u && (n.__c = void 0, u()), hooks_module_r = t;
     }
     function hooks_module_k(n) {
-        var t = hooks_module_u;
-        n.__c = n.__(), hooks_module_u = t;
+        var t = hooks_module_r;
+        n.__c = n.__(), hooks_module_r = t;
     }
     function hooks_module_w(n, t) {
-        return !n || n.length !== t.length || t.some((function(t, u) {
-            return t !== n[u];
+        return !n || n.length !== t.length || t.some((function(t, r) {
+            return t !== n[r];
         }));
     }
     function hooks_module_z(n, t) {
@@ -9095,10 +9112,10 @@ window.smartCard = function(modules) {
     }
     function CardNumber(_ref2) {
         var _ref2$name = _ref2.name, name = void 0 === _ref2$name ? "number" : _ref2$name, _ref2$autocomplete = _ref2.autocomplete, autocomplete = void 0 === _ref2$autocomplete ? "cc-number" : _ref2$autocomplete, _ref2$navigation = _ref2.navigation, navigation = void 0 === _ref2$navigation ? defaultNavigation : _ref2$navigation, _ref2$allowNavigation = _ref2.allowNavigation, allowNavigation = void 0 !== _ref2$allowNavigation && _ref2$allowNavigation, state = _ref2.state, ref = _ref2.ref, type = _ref2.type, className = _ref2.className, placeholder = _ref2.placeholder, style = _ref2.style, maxLength = _ref2.maxLength, onChange = _ref2.onChange, onFocus = _ref2.onFocus, onBlur = _ref2.onBlur, onValidityChange = _ref2.onValidityChange;
-        var _useState = hooks_module_y(DEFAULT_CARD_TYPE), cardType = _useState[0], setCardType = _useState[1];
-        var _useState2 = hooks_module_y(_extends({}, defaultInputState, state)), inputState = _useState2[0], setInputState = _useState2[1];
+        var _useState = hooks_module_p(DEFAULT_CARD_TYPE), cardType = _useState[0], setCardType = _useState[1];
+        var _useState2 = hooks_module_p(_extends({}, defaultInputState, state)), inputState = _useState2[0], setInputState = _useState2[1];
         var inputValue = inputState.inputValue, maskedInputValue = inputState.maskedInputValue, cursorStart = inputState.cursorStart, cursorEnd = inputState.cursorEnd, keyStrokeCount = inputState.keyStrokeCount, isValid = inputState.isValid, isPotentiallyValid = inputState.isPotentiallyValid, contentPasted = inputState.contentPasted;
-        hooks_module_((function() {
+        hooks_module_h((function() {
             var validity = function(value, cardType) {
                 var trimmedValue = removeSpaces(value);
                 var lengths = cardType.lengths;
@@ -9116,7 +9133,7 @@ window.smartCard = function(modules) {
                 return _extends({}, newState, validity);
             }));
         }), [ inputValue, maskedInputValue ]);
-        hooks_module_((function() {
+        hooks_module_h((function() {
             "function" == typeof onValidityChange && onValidityChange({
                 isValid: isValid,
                 isPotentiallyValid: isPotentiallyValid
@@ -9216,9 +9233,9 @@ window.smartCard = function(modules) {
     }
     function CardExpiry(_ref) {
         var _ref$name = _ref.name, name = void 0 === _ref$name ? "expiry" : _ref$name, _ref$autocomplete = _ref.autocomplete, autocomplete = void 0 === _ref$autocomplete ? "cc-exp" : _ref$autocomplete, _ref$navigation = _ref.navigation, navigation = void 0 === _ref$navigation ? defaultNavigation : _ref$navigation, ref = _ref.ref, type = _ref.type, className = _ref.className, placeholder = _ref.placeholder, style = _ref.style, maxLength = _ref.maxLength, onChange = _ref.onChange, onFocus = _ref.onFocus, onBlur = _ref.onBlur, onValidityChange = _ref.onValidityChange, _ref$allowNavigation = _ref.allowNavigation, allowNavigation = void 0 !== _ref$allowNavigation && _ref$allowNavigation;
-        var _useState = hooks_module_y(_extends({}, defaultInputState, _ref.state)), inputState = _useState[0], setInputState = _useState[1];
+        var _useState = hooks_module_p(_extends({}, defaultInputState, _ref.state)), inputState = _useState[0], setInputState = _useState[1];
         var maskedInputValue = inputState.maskedInputValue, keyStrokeCount = inputState.keyStrokeCount, isValid = inputState.isValid, isPotentiallyValid = inputState.isPotentiallyValid, contentPasted = inputState.contentPasted;
-        hooks_module_((function() {
+        hooks_module_h((function() {
             var validity = {
                 isValid: (0, card_validator_dist_default.a.expirationDate)(maskedInputValue).isValid,
                 isPotentiallyValid: !0
@@ -9227,7 +9244,7 @@ window.smartCard = function(modules) {
                 return _extends({}, newState, validity);
             }));
         }), [ inputState.inputValue, maskedInputValue ]);
-        hooks_module_((function() {
+        hooks_module_h((function() {
             "function" == typeof onValidityChange && onValidityChange({
                 isValid: isValid,
                 isPotentiallyValid: isPotentiallyValid
@@ -9318,9 +9335,9 @@ window.smartCard = function(modules) {
     }
     function CardCVV(_ref) {
         var _ref$name = _ref.name, name = void 0 === _ref$name ? "cvv" : _ref$name, _ref$autocomplete = _ref.autocomplete, autocomplete = void 0 === _ref$autocomplete ? "cc-csc" : _ref$autocomplete, _ref$navigation = _ref.navigation, navigation = void 0 === _ref$navigation ? defaultNavigation : _ref$navigation, _ref$allowNavigation = _ref.allowNavigation, allowNavigation = void 0 !== _ref$allowNavigation && _ref$allowNavigation, ref = _ref.ref, type = _ref.type, className = _ref.className, placeholder = _ref.placeholder, style = _ref.style, maxLength = _ref.maxLength, onChange = _ref.onChange, onFocus = _ref.onFocus, onBlur = _ref.onBlur, onValidityChange = _ref.onValidityChange, cardType = _ref.cardType;
-        var _useState = hooks_module_y(_extends({}, defaultInputState, _ref.state)), inputState = _useState[0], setInputState = _useState[1];
+        var _useState = hooks_module_p(_extends({}, defaultInputState, _ref.state)), inputState = _useState[0], setInputState = _useState[1];
         var inputValue = inputState.inputValue, keyStrokeCount = inputState.keyStrokeCount, isValid = inputState.isValid, isPotentiallyValid = inputState.isPotentiallyValid;
-        hooks_module_((function() {
+        hooks_module_h((function() {
             var validity = function(value, cardType) {
                 var isValid = !1;
                 value.length === getCvvLength(cardType) && (isValid = !0);
@@ -9333,7 +9350,7 @@ window.smartCard = function(modules) {
                 return _extends({}, newState, validity);
             }));
         }), [ inputValue ]);
-        hooks_module_((function() {
+        hooks_module_h((function() {
             "function" == typeof onValidityChange && onValidityChange({
                 isValid: isValid,
                 isPotentiallyValid: isPotentiallyValid
@@ -9386,9 +9403,9 @@ window.smartCard = function(modules) {
     }
     function CardName(_ref) {
         var _ref$name = _ref.name, name = void 0 === _ref$name ? "name" : _ref$name, _ref$navigation = _ref.navigation, navigation = void 0 === _ref$navigation ? defaultNavigation : _ref$navigation, _ref$allowNavigation = _ref.allowNavigation, allowNavigation = void 0 !== _ref$allowNavigation && _ref$allowNavigation, ref = _ref.ref, type = _ref.type, className = _ref.className, placeholder = _ref.placeholder, style = _ref.style, maxLength = _ref.maxLength, onChange = _ref.onChange, onFocus = _ref.onFocus, onBlur = _ref.onBlur, onValidityChange = _ref.onValidityChange;
-        var _useState = hooks_module_y(_extends({}, defaultInputState, _ref.state)), inputState = _useState[0], setInputState = _useState[1];
+        var _useState = hooks_module_p(_extends({}, defaultInputState, _ref.state)), inputState = _useState[0], setInputState = _useState[1];
         var inputValue = inputState.inputValue, keyStrokeCount = inputState.keyStrokeCount, isValid = inputState.isValid, isPotentiallyValid = inputState.isPotentiallyValid;
-        hooks_module_((function() {
+        hooks_module_h((function() {
             var validity = function(value) {
                 var isValid = !1;
                 value.length >= 1 && value.length <= 255 && (isValid = !0);
@@ -9401,7 +9418,7 @@ window.smartCard = function(modules) {
                 return _extends({}, newState, validity);
             }));
         }), [ inputValue ]);
-        hooks_module_((function() {
+        hooks_module_h((function() {
             "function" == typeof onValidityChange && onValidityChange({
                 isValid: isValid,
                 isPotentiallyValid: isPotentiallyValid
@@ -9454,18 +9471,18 @@ window.smartCard = function(modules) {
     function CardField(_ref) {
         var _placeholder$number, _placeholder$expiry, _placeholder$cvv;
         var cspNonce = _ref.cspNonce, onChange = _ref.onChange, _ref$styleObject = _ref.styleObject, styleObject = void 0 === _ref$styleObject ? {} : _ref$styleObject, _ref$placeholder = _ref.placeholder, placeholder = void 0 === _ref$placeholder ? {} : _ref$placeholder, _ref$gqlErrorsObject = _ref.gqlErrorsObject, gqlErrorsObject = void 0 === _ref$gqlErrorsObject ? {} : _ref$gqlErrorsObject, autoFocusRef = _ref.autoFocusRef, autocomplete = _ref.autocomplete;
-        var _useState = hooks_module_y(""), number = _useState[0], setNumber = _useState[1];
-        var _useState2 = hooks_module_y(""), cvv = _useState2[0], setCvv = _useState2[1];
-        var _useState3 = hooks_module_y(""), expiry = _useState3[0], setExpiry = _useState3[1];
-        var _useState4 = hooks_module_y(!0), isValid = _useState4[0], setIsValid = _useState4[1];
-        var _useState5 = hooks_module_y(initFieldValidity), numberValidity = _useState5[0], setNumberValidity = _useState5[1];
-        var _useState6 = hooks_module_y(initFieldValidity), expiryValidity = _useState6[0], setExpiryValidity = _useState6[1];
-        var _useState7 = hooks_module_y(initFieldValidity), cvvValidity = _useState7[0], setCvvValidity = _useState7[1];
-        var _useState8 = hooks_module_y(DEFAULT_CARD_TYPE), cardType = _useState8[0], setCardType = _useState8[1];
+        var _useState = hooks_module_p(""), number = _useState[0], setNumber = _useState[1];
+        var _useState2 = hooks_module_p(""), cvv = _useState2[0], setCvv = _useState2[1];
+        var _useState3 = hooks_module_p(""), expiry = _useState3[0], setExpiry = _useState3[1];
+        var _useState4 = hooks_module_p(!0), isValid = _useState4[0], setIsValid = _useState4[1];
+        var _useState5 = hooks_module_p(initFieldValidity), numberValidity = _useState5[0], setNumberValidity = _useState5[1];
+        var _useState6 = hooks_module_p(initFieldValidity), expiryValidity = _useState6[0], setExpiryValidity = _useState6[1];
+        var _useState7 = hooks_module_p(initFieldValidity), cvvValidity = _useState7[0], setCvvValidity = _useState7[1];
+        var _useState8 = hooks_module_p(DEFAULT_CARD_TYPE), cardType = _useState8[0], setCardType = _useState8[1];
         var _getStyles = getStyles(styleObject), generalStyle = _getStyles[0], inputStyle = _getStyles[1];
-        var numberRef = hooks_module_s();
-        var expiryRef = hooks_module_s();
-        var cvvRef = hooks_module_s();
+        var numberRef = hooks_module_();
+        var expiryRef = hooks_module_();
+        var cvvRef = hooks_module_();
         var composedStyles = _extends({}, DEFAULT_STYLE, generalStyle);
         var cardNumberNavivation = {
             next: goToNextField(expiryRef),
@@ -9483,10 +9500,10 @@ window.smartCard = function(modules) {
             },
             previous: goToPreviousField(expiryRef)
         };
-        hooks_module_((function() {
+        hooks_module_h((function() {
             autoFocusRef(numberRef);
         }), []);
-        hooks_module_((function() {
+        hooks_module_h((function() {
             var field = gqlErrorsObject.field, errors = gqlErrorsObject.errors;
             "number" === field && errors.length > 0 && setNumberValidity({
                 isPotentiallyValid: !1,
@@ -9501,7 +9518,7 @@ window.smartCard = function(modules) {
                 isValid: !1
             });
         }), [ gqlErrorsObject ]);
-        hooks_module_((function() {
+        hooks_module_h((function() {
             var valid = Boolean(numberValidity.isValid && cvvValidity.isValid && expiryValidity.isValid);
             setIsValid(valid);
             var errors = setErrors({
@@ -9578,24 +9595,24 @@ window.smartCard = function(modules) {
     function CardNumberField(_ref5) {
         var _placeholder$number2;
         var cspNonce = _ref5.cspNonce, onChange = _ref5.onChange, _ref5$styleObject = _ref5.styleObject, styleObject = void 0 === _ref5$styleObject ? {} : _ref5$styleObject, _ref5$placeholder = _ref5.placeholder, placeholder = void 0 === _ref5$placeholder ? {} : _ref5$placeholder, autoFocusRef = _ref5.autoFocusRef, autocomplete = _ref5.autocomplete, _ref5$gqlErrors = _ref5.gqlErrors, gqlErrors = void 0 === _ref5$gqlErrors ? [] : _ref5$gqlErrors;
-        var _useState9 = hooks_module_y(""), number = _useState9[0], setNumber = _useState9[1];
-        var _useState10 = hooks_module_y(initFieldValidity), numberValidity = _useState10[0], setNumberValidity = _useState10[1];
+        var _useState9 = hooks_module_p(""), number = _useState9[0], setNumber = _useState9[1];
+        var _useState10 = hooks_module_p(initFieldValidity), numberValidity = _useState10[0], setNumberValidity = _useState10[1];
         var _getStyles2 = getStyles(styleObject), generalStyle = _getStyles2[0], inputStyle = _getStyles2[1];
-        var numberRef = hooks_module_s();
+        var numberRef = hooks_module_();
         var composedStyles = _extends({}, {
             input: DEFAULT_INPUT_STYLE
         }, generalStyle);
         var isValid = numberValidity.isValid, isPotentiallyValid = numberValidity.isPotentiallyValid;
-        hooks_module_((function() {
+        hooks_module_h((function() {
             autoFocusRef(numberRef);
         }), []);
-        hooks_module_((function() {
+        hooks_module_h((function() {
             gqlErrors.length > 0 && setNumberValidity({
                 isPotentiallyValid: !1,
                 isValid: !1
             });
         }), [ gqlErrors ]);
-        hooks_module_((function() {
+        hooks_module_h((function() {
             var errors = setErrors({
                 isNumberValid: numberValidity.isValid,
                 gqlErrorsObject: {
@@ -9630,24 +9647,24 @@ window.smartCard = function(modules) {
     function CardExpiryField(_ref7) {
         var _placeholder$expiry2;
         var cspNonce = _ref7.cspNonce, onChange = _ref7.onChange, _ref7$styleObject = _ref7.styleObject, styleObject = void 0 === _ref7$styleObject ? {} : _ref7$styleObject, _ref7$placeholder = _ref7.placeholder, placeholder = void 0 === _ref7$placeholder ? {} : _ref7$placeholder, autoFocusRef = _ref7.autoFocusRef, autocomplete = _ref7.autocomplete, _ref7$gqlErrors = _ref7.gqlErrors, gqlErrors = void 0 === _ref7$gqlErrors ? [] : _ref7$gqlErrors;
-        var _useState11 = hooks_module_y(""), expiry = _useState11[0], setExpiry = _useState11[1];
-        var _useState12 = hooks_module_y(initFieldValidity), expiryValidity = _useState12[0], setExpiryValidity = _useState12[1];
+        var _useState11 = hooks_module_p(""), expiry = _useState11[0], setExpiry = _useState11[1];
+        var _useState12 = hooks_module_p(initFieldValidity), expiryValidity = _useState12[0], setExpiryValidity = _useState12[1];
         var _getStyles3 = getStyles(styleObject), generalStyle = _getStyles3[0], inputStyle = _getStyles3[1];
-        var expiryRef = hooks_module_s();
+        var expiryRef = hooks_module_();
         var composedStyles = _extends({}, {
             input: DEFAULT_INPUT_STYLE
         }, generalStyle);
         var isValid = expiryValidity.isValid, isPotentiallyValid = expiryValidity.isPotentiallyValid;
-        hooks_module_((function() {
+        hooks_module_h((function() {
             autoFocusRef(expiryRef);
         }), []);
-        hooks_module_((function() {
+        hooks_module_h((function() {
             gqlErrors.length > 0 && setExpiryValidity({
                 isPotentiallyValid: !1,
                 isValid: !1
             });
         }), [ gqlErrors ]);
-        hooks_module_((function() {
+        hooks_module_h((function() {
             var errors = setErrors({
                 isExpiryValid: expiryValidity.isValid
             });
@@ -9678,24 +9695,24 @@ window.smartCard = function(modules) {
     function CardCVVField(_ref9) {
         var _placeholder$cvv2;
         var cspNonce = _ref9.cspNonce, onChange = _ref9.onChange, _ref9$styleObject = _ref9.styleObject, styleObject = void 0 === _ref9$styleObject ? {} : _ref9$styleObject, _ref9$placeholder = _ref9.placeholder, placeholder = void 0 === _ref9$placeholder ? {} : _ref9$placeholder, autoFocusRef = _ref9.autoFocusRef, autocomplete = _ref9.autocomplete, _ref9$gqlErrors = _ref9.gqlErrors, gqlErrors = void 0 === _ref9$gqlErrors ? [] : _ref9$gqlErrors;
-        var _useState13 = hooks_module_y(""), cvv = _useState13[0], setCvv = _useState13[1];
-        var _useState14 = hooks_module_y(initFieldValidity), cvvValidity = _useState14[0], setCvvValidity = _useState14[1];
+        var _useState13 = hooks_module_p(""), cvv = _useState13[0], setCvv = _useState13[1];
+        var _useState14 = hooks_module_p(initFieldValidity), cvvValidity = _useState14[0], setCvvValidity = _useState14[1];
         var _getStyles4 = getStyles(styleObject), generalStyle = _getStyles4[0], inputStyle = _getStyles4[1];
-        var cvvRef = hooks_module_s();
+        var cvvRef = hooks_module_();
         var composedStyles = _extends({}, {
             input: DEFAULT_INPUT_STYLE
         }, generalStyle);
         var isValid = cvvValidity.isValid, isPotentiallyValid = cvvValidity.isPotentiallyValid;
-        hooks_module_((function() {
+        hooks_module_h((function() {
             autoFocusRef(cvvRef);
         }), []);
-        hooks_module_((function() {
+        hooks_module_h((function() {
             gqlErrors.length > 0 && setCvvValidity({
                 isPotentiallyValid: !1,
                 isValid: !1
             });
         }), [ gqlErrors ]);
-        hooks_module_((function() {
+        hooks_module_h((function() {
             var errors = setErrors({
                 isCvvValid: cvvValidity.isValid
             });
@@ -9726,24 +9743,24 @@ window.smartCard = function(modules) {
     function CardNameField(_ref11) {
         var _placeholder$name;
         var cspNonce = _ref11.cspNonce, onChange = _ref11.onChange, _ref11$styleObject = _ref11.styleObject, styleObject = void 0 === _ref11$styleObject ? {} : _ref11$styleObject, _ref11$placeholder = _ref11.placeholder, placeholder = void 0 === _ref11$placeholder ? {} : _ref11$placeholder, autoFocusRef = _ref11.autoFocusRef, _ref11$gqlErrors = _ref11.gqlErrors, gqlErrors = void 0 === _ref11$gqlErrors ? [] : _ref11$gqlErrors;
-        var _useState15 = hooks_module_y(""), name = _useState15[0], setName = _useState15[1];
-        var _useState16 = hooks_module_y(initFieldValidity), nameValidity = _useState16[0], setNameValidity = _useState16[1];
+        var _useState15 = hooks_module_p(""), name = _useState15[0], setName = _useState15[1];
+        var _useState16 = hooks_module_p(initFieldValidity), nameValidity = _useState16[0], setNameValidity = _useState16[1];
         var _getStyles5 = getStyles(styleObject), generalStyle = _getStyles5[0], inputStyle = _getStyles5[1];
-        var nameRef = hooks_module_s();
+        var nameRef = hooks_module_();
         var composedStyles = _extends({}, {
             input: DEFAULT_INPUT_STYLE
         }, generalStyle);
         var isValid = nameValidity.isValid, isPotentiallyValid = nameValidity.isPotentiallyValid;
-        hooks_module_((function() {
+        hooks_module_h((function() {
             autoFocusRef(nameRef);
         }), []);
-        hooks_module_((function() {
+        hooks_module_h((function() {
             gqlErrors.length > 0 && setNameValidity({
                 isPotentiallyValid: !1,
                 isValid: !1
             });
         }), [ gqlErrors ]);
-        hooks_module_((function() {
+        hooks_module_h((function() {
             var errors = setErrors({
                 isNameValid: nameValidity.isValid
             });
@@ -9773,11 +9790,11 @@ window.smartCard = function(modules) {
     function Page(_ref) {
         var cspNonce = _ref.cspNonce, props = _ref.props;
         var facilitatorAccessToken = props.facilitatorAccessToken, style = props.style, disableAutocomplete = props.disableAutocomplete, placeholder = props.placeholder, type = props.type, onChange = props.onChange, xport = props.export;
-        var _useState = hooks_module_y(), fieldValue = _useState[0], setFieldValue = _useState[1];
-        var _useState2 = hooks_module_y(!1), fieldValid = _useState2[0], setFieldValid = _useState2[1];
-        var _useState3 = hooks_module_y([]), fieldErrors = _useState3[0], setFieldErrors = _useState3[1];
-        var _useState4 = hooks_module_y(), mainRef = _useState4[0], setRef = _useState4[1];
-        var _useState5 = hooks_module_y({
+        var _useState = hooks_module_p(), fieldValue = _useState[0], setFieldValue = _useState[1];
+        var _useState2 = hooks_module_p(!1), fieldValid = _useState2[0], setFieldValid = _useState2[1];
+        var _useState3 = hooks_module_p([]), fieldErrors = _useState3[0], setFieldErrors = _useState3[1];
+        var _useState4 = hooks_module_p(), mainRef = _useState4[0], setRef = _useState4[1];
+        var _useState5 = hooks_module_p({
             singleField: {},
             numberField: [],
             expiryField: [],
@@ -9821,13 +9838,13 @@ window.smartCard = function(modules) {
                 nameField: []
             });
         };
-        hooks_module_((function() {
+        hooks_module_h((function() {
             onChange({
                 isValid: fieldValid,
                 errors: fieldErrors
             });
         }), [ fieldValid, fieldErrors ]);
-        hooks_module_((function() {
+        hooks_module_h((function() {
             (input = mainRef) && window.addEventListener("focus", (function() {
                 setTimeout((function() {
                     var activeEl = document.activeElement;
@@ -9847,7 +9864,7 @@ window.smartCard = function(modules) {
             }));
             var input;
         }), [ mainRef ]);
-        hooks_module_((function() {
+        hooks_module_h((function() {
             !function(_ref) {
                 window.exports = {
                     name: _ref.name,

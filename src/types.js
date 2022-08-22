@@ -73,7 +73,8 @@ export type CheckoutProps = {|
         width : number,
         height : number
     |},
-    inlinexo : boolean | void
+    inlinexo : boolean | void,
+    smokeHash : string
 |};
 
 export type CheckoutFlowType = ZoidComponent<CheckoutProps>;
