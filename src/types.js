@@ -74,7 +74,7 @@ export type CheckoutProps = {|
         height : number
     |},
     inlinexo : boolean | void,
-    smokeHash : string
+    smokeHash? : string
 |};
 
 export type CheckoutFlowType = ZoidComponent<CheckoutProps>;
