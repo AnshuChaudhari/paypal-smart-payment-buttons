@@ -177,55 +177,57 @@ function initPaymentFields({ props, components, payment, serviceData, config } :
     const { render, close: closePaymentFields } = PaymentFields({
         createOrder,
         fundingSource,
-        onContinue: (data : ConfirmData, orderID: string) => {
-            return getConfirmOrder({
-                orderID, payload: data, partnerAttributionID
-            }, {
-                facilitatorAccessToken: serviceData.facilitatorAccessToken
-            }).then(() => {
-                instance = Checkout({
-                    onClose: () => {
-                        if (!forceClosed && !approved) {
+        onContinue: (data : ConfirmData) => {
+            return createOrder().then(orderID => {
+                return getConfirmOrder({
+                    orderID, payload: data, partnerAttributionID
+                }, {
+                    facilitatorAccessToken: serviceData.facilitatorAccessToken
+                }).then(() => {
+                    instance = Checkout({
+                        onClose: () => {
+                            if (!forceClosed && !approved) {
+                                // eslint-disable-next-line no-use-before-define
+                                return close().then(() => {
+                                    return onCancel();
+                                });
+                            }
+                        },
+                        onApprove: ({ payerID, paymentID, billingToken }) => {
+                            approved = true;
+                            // eslint-disable-next-line no-use-before-define
+                            return close().then(() => {
+                                return onApprove({ payerID, paymentID, billingToken, buyerAccessToken }, { restart }).catch(noop);
+                            });
+                        },
+                        branded: false,
+                        standaloneFundingSource: fundingSource,
+                        inlinexo: false,
+                        onCancel: () => {
                             // eslint-disable-next-line no-use-before-define
                             return close().then(() => {
                                 return onCancel();
                             });
-                        }
-                    },
-                    onApprove: ({ payerID, paymentID, billingToken }) => {
-                        approved = true;
-                        // eslint-disable-next-line no-use-before-define
-                        return close().then(() => {
-                            return onApprove({ payerID, paymentID, billingToken, buyerAccessToken }, { restart }).catch(noop);
-                        });
-                    },
-                    branded: false,
-                    standaloneFundingSource: fundingSource,
-                    inlinexo: false,
-                    onCancel: () => {
-                        // eslint-disable-next-line no-use-before-define
-                        return close().then(() => {
-                            return onCancel();
-                        });
-                    },
-                    onAuth: ({ accessToken }) => {
-                        const access_token = accessToken ? accessToken : buyerAccessToken;
-                        return onAuth({ accessToken: access_token }).then(token => {
-                            buyerAccessToken = token;
-                        });
-                    },
-                    restart,
-                    createOrder,
-                    onError,
-                    sessionID,
-                    fundingSource,
-                    buyerCountry,
-                    locale,
-                    commit,
-                    cspNonce,
+                        },
+                        onAuth: ({ accessToken }) => {
+                            const access_token = accessToken ? accessToken : buyerAccessToken;
+                            return onAuth({ accessToken: access_token }).then(token => {
+                                buyerAccessToken = token;
+                            });
+                        },
+                        restart,
+                        createOrder,
+                        onError,
+                        sessionID,
+                        fundingSource,
+                        buyerCountry,
+                        locale,
+                        commit,
+                        cspNonce,
+                    });
+                    instance.renderTo(getRenderWindow(), TARGET_ELEMENT.BODY, CONTEXT.POPUP);
                 });
-                instance.renderTo(getRenderWindow(), TARGET_ELEMENT.BODY, CONTEXT.POPUP);
-            })
+            });
         },
         onFieldsClose: () => {
             return closePaymentFields().then(() => {
