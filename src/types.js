@@ -41,40 +41,40 @@ export type ZoidComponent<P> = {|
 export type CheckoutProps = {|
     window? : ?(ProxyWindow | CrossDomainWindowType),
     sessionID : string,
-    buttonSessionID? : string,
-    stickinessID? : string,
+    buttonSessionID : string,
+    stickinessID : string,
     clientAccessToken? : ?string,
     createAuthCode? : () => ZalgoPromise<?string>,
     getConnectURL? : ?({| payerID : string |}) => ZalgoPromise<string>,
     createOrder : () => ZalgoPromise<string>,
     onApprove : ({| accelerated? : boolean, payerID : string, paymentID : ?string, billingToken : ?string, subscriptionID : ?string, authCode : ?string |}) => ZalgoPromise<void> | void,
-    onComplete? : () => ZalgoPromise<void> | void,
+    onComplete : () => ZalgoPromise<void> | void,
     onAuth : ({| accessToken : string |}) => ZalgoPromise<void> | void,
     onCancel : () => ZalgoPromise<void> | void,
-    onShippingChange? : ?(data : OnShippingChangeData, {| resolve : () => ZalgoPromise<void>, reject : (string) => ZalgoPromise<void> |}) => ZalgoPromise<void> | void,
-    onShippingAddressChange? : ?(data : OnShippingAddressChangeData, {| resolve : () => ZalgoPromise<void>, reject : (string) => ZalgoPromise<void> |}) => ZalgoPromise<void> | void,
-    onShippingOptionsChange? : ?(data : OnShippingOptionsChangeData, {| resolve : () => ZalgoPromise<void>, reject : (string) => ZalgoPromise<void> |}) => ZalgoPromise<void> | void,
+    onShippingChange : ?(data : OnShippingChangeData, {| resolve : () => ZalgoPromise<void>, reject : (string) => ZalgoPromise<void> |}) => ZalgoPromise<void> | void,
+    onShippingAddressChange : ?(data : OnShippingAddressChangeData, {| resolve : () => ZalgoPromise<void>, reject : (string) => ZalgoPromise<void> |}) => ZalgoPromise<void> | void,
+    onShippingOptionsChange : ?(data : OnShippingOptionsChangeData, {| resolve : () => ZalgoPromise<void>, reject : (string) => ZalgoPromise<void> |}) => ZalgoPromise<void> | void,
     onError : (mixed) => ZalgoPromise<void> | void,
     onClose : () => ZalgoPromise<void> | void,
     fundingSource : FundingType,
-    card? : ?$Values<typeof CARD>,
+    card : ?$Values<typeof CARD>,
     buyerCountry : $Values<typeof COUNTRY>,
     locale : LocaleType,
     commit : boolean,
     cspNonce : ?string,
     venmoPayloadID? : ?string,
-    clientMetadataID? : ?string,
-    enableFunding? : ?$ReadOnlyArray<FundingType>,
+    clientMetadataID : ?string,
+    enableFunding : ?$ReadOnlyArray<FundingType>,
     standaloneFundingSource : ?FundingType,
     amplitude? : boolean,
     branded : boolean | null,
     restart : () => ZalgoPromise<void>,
-    dimensions? : {|
+    dimensions : {|
         width : number,
         height : number
     |},
     inlinexo : boolean | void,
-    smokeHash? : string
+    smokeHash : string
 |};
 
 export type CheckoutFlowType = ZoidComponent<CheckoutProps>;

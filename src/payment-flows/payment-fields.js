@@ -2,15 +2,16 @@
 
 import { ZalgoPromise } from '@krakenjs/zalgo-promise/src';
 import { FUNDING } from '@paypal/sdk-constants/src';
-import { memoize, querySelectorAll, debounce, noop } from '@krakenjs/belter/src';
+import { memoize, querySelectorAll, debounce, noop, stringifyError } from '@krakenjs/belter/src';
 import { getParent, getTop } from '@krakenjs/cross-domain-utils/src';
 
 import { DATA_ATTRIBUTES, TARGET_ELEMENT, CONTEXT } from '../constants';
-import { unresolvedPromise, promiseNoop } from '../lib';
+import { unresolvedPromise, promiseNoop, getLogger } from '../lib';
 import { getConfirmOrder } from '../props';
 import type { ConfirmData } from '../api';
 
 import type { PaymentFlow, PaymentFlowInstance, IsEligibleOptions, IsPaymentEligibleOptions, InitOptions } from './types';
+import { getDimensions } from "./checkout";
 
 function setupPaymentField() {
     // pass
@@ -32,6 +33,9 @@ function isPaymentFieldsEligible({ props, serviceData } : IsEligibleOptions) : b
     const { vault, onShippingChange } = props;
     const { eligibility } = serviceData;
     const componentsList = window.xprops.components || [];
+    getLogger().info('spb_payment_fields_eligibility', {
+        eligibility
+    });
 
     if (vault) {
         return false;
@@ -142,13 +146,19 @@ const slideDownButtons = (fundingSource : ?$Values<typeof FUNDING>) => {
 };
 
 function initPaymentFields({ props, components, payment, serviceData, config } : InitOptions) : PaymentFlowInstance {
-    const { createOrder, onApprove, onCancel, locale, commit, onError, sessionID, partnerAttributionID, buttonSessionID, onAuth } = props;
+    const { createOrder, onApprove, onCancel, locale, commit, onError, sessionID, partnerAttributionID, buttonSessionID, onAuth, stickinessID,
+        onShippingChange, onShippingAddressChange, onShippingOptionsChange, clientMetadataID, enableFunding, onComplete } = props;
 
     const { PaymentFields, Checkout } = components;
-    const { fundingSource } = payment;
+    const { fundingSource, card } = payment;
     const { cspNonce } = config;
     const { buyerCountry, sdkMeta } = serviceData;
     paymentFieldsOpen = false;
+
+    getLogger().info('spb_payment_flow_init_payment_fields', {
+        buttonSessionID,
+        fundingSource
+    });
 
     if (paymentFieldsOpen) {
         return {
@@ -184,6 +194,9 @@ function initPaymentFields({ props, components, payment, serviceData, config } :
                 }, {
                     facilitatorAccessToken: serviceData.facilitatorAccessToken
                 }).then(() => {
+                    getLogger().info('spb_payment_fields_rendering_checkout_instance', {
+                        orderID
+                    });
                     instance = Checkout({
                         onClose: () => {
                             if (!forceClosed && !approved) {
@@ -215,8 +228,21 @@ function initPaymentFields({ props, components, payment, serviceData, config } :
                                 buyerAccessToken = token;
                             });
                         },
+                        buttonSessionID,
+                        stickinessID,
+                        onComplete : () => onComplete({ buyerAccessToken })
+                            // eslint-disable-next-line no-use-before-define
+                            .finally(() => close().then(noop))
+                            .catch(noop),
+                        onShippingChange,
+                        onShippingAddressChange,
+                        onShippingOptionsChange,
                         restart,
                         createOrder,
+                        card,
+                        clientMetadataID,
+                        enableFunding,
+                        dimensions : getDimensions(fundingSource),
                         onError,
                         sessionID,
                         fundingSource,
@@ -224,8 +250,13 @@ function initPaymentFields({ props, components, payment, serviceData, config } :
                         locale,
                         commit,
                         cspNonce,
+                        smokeHash : ''
                     });
                     instance.renderTo(getRenderWindow(), TARGET_ELEMENT.BODY, CONTEXT.POPUP);
+                })
+                .catch(err => {
+                    getLogger().error('payment_fields_confirm_order_error', { err: stringifyError(err) });
+                    throw err;
                 });
             });
         },
