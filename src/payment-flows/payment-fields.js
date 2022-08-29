@@ -33,9 +33,6 @@ function isPaymentFieldsEligible({ props, serviceData } : IsEligibleOptions) : b
     const { vault, onShippingChange } = props;
     const { eligibility } = serviceData;
     const componentsList = window.xprops.components || [];
-    getLogger().info('spb_payment_fields_eligibility', {
-        eligibility
-    });
 
     if (vault) {
         return false;
