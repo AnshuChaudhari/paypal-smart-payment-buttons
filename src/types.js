@@ -178,7 +178,6 @@ export type PaymentFieldsProps = {|
     onError : () => ZalgoPromise<void>,
     onContinue : (data : ConfirmData, orderID : string) => ZalgoPromise<void>,
     createOrder : () => ZalgoPromise<string>,
-    // fieldsSessionID? : string,
     onFieldsClose : () => ZalgoPromise<void>,
     showActionButtons : boolean,
     sdkMeta : string,
