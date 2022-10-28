@@ -42,7 +42,7 @@ function isPaymentFieldsEligible({ props, serviceData } : IsEligibleOptions) : b
         return false;
     }
 
-    if (componentsList.includes('marks')){
+    if (componentsList.includes('marks') && componentsList.includes('payment-fields')){
         return false;
     }
 
@@ -74,22 +74,12 @@ function highlightFundingSource(fundingSource : ?$Values<typeof FUNDING>) {
             el.style.opacity = '1';
         } else {
             el.style.display = 'none';
-            if (el.parentElement) {
-                // $FlowFixMe
-                el.parentElement.style.display = 'none';
-            }
-            el.style.opacity = '0.1';
         }
     });
 }
 
 function unhighlightFundingSources() {
     querySelectorAll(`[${ DATA_ATTRIBUTES.FUNDING_SOURCE }]`).forEach(el => {
-        el.style.opacity = '1';
-        if (el.parentElement) {
-            // $FlowFixMe
-            el.parentElement.style.display = '';
-        }
         el.style.display = '';
     })
 }
@@ -123,10 +113,12 @@ const slideUpButtons = (fundingSource : ?$Values<typeof FUNDING>) => {
 
     const recalculateMargin = () => {
         buttonsContainer.style.marginTop = `${ buttonsContainer.offsetTop - fundingSourceButtonsContainer.offsetTop }px`;
+        paymentFieldsContainer.style.marginTop = `${ buttonsContainer.offsetTop - (fundingSourceButtonsContainer.offsetTop + fundingSourceButtonsContainer.offsetHeight) }px`;
     };
 
     resizeListener = debounce(() => {
         buttonsContainer.style.transitionDuration = '0s';
+        paymentFieldsContainer.style.transitionDuration = '0s';
         recalculateMargin();
     });
     window.addEventListener('resize', resizeListener);
@@ -135,11 +127,13 @@ const slideUpButtons = (fundingSource : ?$Values<typeof FUNDING>) => {
 };
 
 const slideDownButtons = (fundingSource : ?$Values<typeof FUNDING>) => {
-    const { buttonsContainer } = getElements(fundingSource);
+    const { buttonsContainer, paymentFieldsContainer } = getElements(fundingSource);
     unhighlightFundingSources();
     window.removeEventListener('resize', resizeListener);
     buttonsContainer.style.removeProperty('transition-duration');
     buttonsContainer.style.removeProperty('margin-top');
+    paymentFieldsContainer.style.removeProperty('transition-duration');
+    paymentFieldsContainer.style.removeProperty('margin-top');
 };
 
 function initPaymentFields({ props, components, payment, serviceData, config } : InitOptions) : PaymentFlowInstance {
@@ -150,7 +144,6 @@ function initPaymentFields({ props, components, payment, serviceData, config } :
     const { fundingSource, card } = payment;
     const { cspNonce } = config;
     const { buyerCountry, sdkMeta } = serviceData;
-    paymentFieldsOpen = false;
 
     getLogger().info('spb_payment_flow_init_payment_fields', {
         buttonSessionID,
